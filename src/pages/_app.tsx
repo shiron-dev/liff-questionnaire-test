@@ -1,22 +1,21 @@
+import type { Liff } from "@line/liff/exports";
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import type { Liff } from "@line/liff";
 import { useState, useEffect } from "react";
+import { type AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [liffObject, setLiffObject] = useState<Liff | null>(null);
   const [liffError, setLiffError] = useState<string | null>(null);
-
   // Execute liff.init() when the app is initialized
   useEffect(() => {
     // to avoid `window is not defined` error
-    import("@line/liff")
+    void import("@line/liff")
       .then((liff) => liff.default)
       .then((liff) => {
         console.log("LIFF init...");
         liff
           .init({
-            liffId: process.env.NEXT_PUBLIC_LIFF_ID!,
+            liffId: process.env.NEXT_PUBLIC_LIFF_ID,
             withLoginOnExternalBrowser: true,
           })
           .then(() => {

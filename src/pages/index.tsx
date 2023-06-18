@@ -1,12 +1,14 @@
-import type { Liff } from "@line/liff";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import type { Liff } from "@line/liff/exports";
 
-const Home: NextPage<{ liff: Liff | null; liffError: string | null }> = ({
-  liff,
-  liffError,
-}) => {
+interface LiffProps {
+  liff: Liff | null;
+  liffError: string | null;
+}
+
+const Home: NextPage<LiffProps> = ({ liff, liffError }: LiffProps) => {
   return (
     <div>
       <Head>
@@ -17,8 +19,8 @@ const Home: NextPage<{ liff: Liff | null; liffError: string | null }> = ({
 
       <main className={styles.main}>
         <h1>create-liff-app</h1>
-        {liff && <p>LIFF init succeeded.</p>}
-        {liffError && (
+        {liff != null && <p>LIFF init succeeded.</p>}
+        {liffError != null && (
           <>
             <p>LIFF init failed.</p>
             <p>
